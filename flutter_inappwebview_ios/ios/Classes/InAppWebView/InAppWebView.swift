@@ -831,7 +831,7 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate,
     
     public func initializeWindowIdJS() {
         if let windowId = windowId {
-            if #available(iOS 14.0, *) {
+            if #available(iOS 18.0, *) {
                 let contentWorlds = configuration.userContentController.getContentWorlds(with: windowId)
                 for contentWorld in contentWorlds {
                     let source = WindowIdJS.WINDOW_ID_INITIALIZE_JS_SOURCE().replacingOccurrences(of: PluginScriptsUtil.VAR_PLACEHOLDER_VALUE, with: String(windowId))
@@ -1421,7 +1421,7 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate,
         evaluateJavascript(source: flagVariable) { (alreadyLoaded) in
             if let alreadyLoaded = alreadyLoaded as? Bool, alreadyLoaded {
                 let enableSource = "\(flagVariable) = \(enable);"
-                if #available(iOS 14.0, *), pluginScript.requiredInAllContentWorlds {
+                if #available(iOS 18.0, *), pluginScript.requiredInAllContentWorlds {
                     for contentWorld in self.configuration.userContentController.contentWorlds {
                         self.evaluateJavaScript(enableSource, frame: nil, contentWorld: contentWorld, completionHandler: nil)
                     }
@@ -1433,7 +1433,7 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate,
                 }
             }
             else if enable {
-                if #available(iOS 14.0, *), pluginScript.requiredInAllContentWorlds {
+                if #available(iOS 18.0, *), pluginScript.requiredInAllContentWorlds {
                     for contentWorld in self.configuration.userContentController.contentWorlds {
                         self.evaluateJavaScript(pluginScript.source, frame: nil, contentWorld: contentWorld, completionHandler: nil)
                         self.configuration.userContentController.addPluginScript(pluginScript)
@@ -1496,7 +1496,7 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate,
         }
     }
     
-    @available(iOS 14.0, *)
+    @available(iOS 18.0, *)
     public func injectDeferredObject(source: String, contentWorld: WKContentWorld, withWrapper jsWrapper: String?, completionHandler: ((Any?) -> Void)? = nil) {
         var jsToInject = source
         if let wrapper = jsWrapper {
@@ -1564,7 +1564,7 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate,
         injectDeferredObject(source: source, withWrapper: nil, completionHandler: completionHandler)
     }
     
-    @available(iOS 14.0, *)
+    @available(iOS 18.0, *)
     public func evaluateJavascript(source: String, contentWorld: WKContentWorld, completionHandler: ((Any?) -> Void)? = nil) {
         injectDeferredObject(source: source, contentWorld: contentWorld, withWrapper: nil, completionHandler: completionHandler)
     }
